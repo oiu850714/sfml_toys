@@ -14,4 +14,7 @@ namespace settings
   const std::string AlienImagePath = "assets/images/alien.bmp";
 
   const int ShipMoveSpeed = 10;
+  const sf::Vector2f BulletSize{6, 30};
+  const int BulletSpeed = 30;
+  const int MaximumBullet = 5;
 }

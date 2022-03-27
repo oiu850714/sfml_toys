@@ -17,13 +17,16 @@ public:
   void update();
   void draw();
 
+  sf::Vector2f getShipMozzlePos() const;
+
 private:
   sf::RenderWindow *Window_;
   sf::Image Image_;
   sf::Texture Texture_;
   PygameSpriteFacade Sprite_;
 
-  enum class ShipState {
+  enum class ShipState
+  {
     LR_Release,
     L,
     R,

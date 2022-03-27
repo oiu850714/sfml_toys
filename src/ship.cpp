@@ -98,3 +98,8 @@ void Ship::draw()
 {
   Window_->draw(Sprite_.getSFSprite());
 }
+
+sf::Vector2f Ship::getShipMozzlePos() const
+{
+  return Sprite_.getTopMid();
+}

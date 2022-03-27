@@ -4,6 +4,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 
 #include "ship.hpp"
+#include "bullets.hpp"
 
 class SpaceInvaders {
 public:
@@ -23,4 +24,5 @@ private:
   sf::Clock Clock_;
   sf::RenderWindow Window_;
   Ship Ship_;
+  Bullets Bullets_;
 };

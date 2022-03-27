@@ -1,6 +1,7 @@
 cmake_minimum_required (VERSION 3.16)
 
 add_library(space_invaders STATIC
+  "bullets.cpp"
   "space-invaders.cpp"
   "ship.cpp"
   "pygame-sprite-facade.cpp"

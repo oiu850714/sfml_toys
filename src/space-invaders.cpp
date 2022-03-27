@@ -3,7 +3,8 @@
 #include <iostream>
 
 SpaceInvaders::SpaceInvaders()
-    : Window_(sf::VideoMode(1920, 1080), "Space Invaders"), Ship_(&Window_)
+    : Window_(sf::VideoMode(1920, 1080), "Space Invaders"), Ship_(&Window_),
+      Bullets_(&Window_, Ship_)
 {
 }
 
@@ -26,6 +27,7 @@ void SpaceInvaders::handleInput()
     {
       this->notify_(event);
       Ship_.notify(event);
+      Bullets_.notify(event);
     }
     if (event.type == sf::Event::KeyReleased)
     {
@@ -55,11 +57,13 @@ void SpaceInvaders::update()
   Clock_.restart();
 
   Ship_.update();
+  Bullets_.update();
 }
 
 void SpaceInvaders::render()
 {
   Window_.clear(settings::BackgroundColor);
   Ship_.draw();
+  Bullets_.draw();
   Window_.display();
 }
