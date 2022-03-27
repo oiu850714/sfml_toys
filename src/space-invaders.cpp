@@ -20,7 +20,8 @@ void SpaceInvaders::handleInput()
   sf::Event event;
   while (Window_.pollEvent(event))
   {
-    if (event.type == sf::Event::Closed) {
+    if (event.type == sf::Event::Closed)
+    {
       quitGame_();
     }
     if (event.type == sf::Event::KeyPressed)
@@ -36,14 +37,17 @@ void SpaceInvaders::handleInput()
   }
 }
 
-void SpaceInvaders::notify_(const sf::Event& event) {
+void SpaceInvaders::notify_(const sf::Event &event)
+{
   assert(event.type == sf::Event::KeyPressed);
-  if (event.key.code == sf::Keyboard::Q) {
+  if (event.key.code == sf::Keyboard::Q)
+  {
     quitGame_();
   }
 }
 
-void SpaceInvaders::quitGame_() {
+void SpaceInvaders::quitGame_()
+{
   Done_ = true;
   Window_.close();
 }
@@ -51,7 +55,8 @@ void SpaceInvaders::quitGame_() {
 void SpaceInvaders::update()
 {
   // 60fps
-  if (Clock_.getElapsedTime().asMilliseconds() <= 16.6) {
+  if (Clock_.getElapsedTime().asMilliseconds() <= 16.6)
+  {
     return;
   }
   Clock_.restart();

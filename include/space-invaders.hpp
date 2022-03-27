@@ -6,7 +6,8 @@
 #include "ship.hpp"
 #include "bullets.hpp"
 
-class SpaceInvaders {
+class SpaceInvaders
+{
 public:
   SpaceInvaders();
   ~SpaceInvaders();
@@ -17,7 +18,7 @@ public:
   void render();
 
 private:
-  void notify_(const sf::Event&);
+  void notify_(const sf::Event &);
   void quitGame_();
 
   bool Done_ = false;

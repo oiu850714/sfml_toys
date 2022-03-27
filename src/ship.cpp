@@ -22,28 +22,34 @@ void Ship::notify(const sf::Event &e)
   {
     if (e.key.code == sf::Keyboard::Right)
     {
-      if (State_ == ShipState::LR_Release) {
+      if (State_ == ShipState::LR_Release)
+      {
         State_ = ShipState::R;
         return;
       }
-      if (State_ == ShipState::R) {
+      if (State_ == ShipState::R)
+      {
         return;
       }
-      if (State_ == ShipState::L) {
+      if (State_ == ShipState::L)
+      {
         State_ = ShipState::BOTH_LR;
         return;
       }
     }
     if (e.key.code == sf::Keyboard::Left)
     {
-      if (State_ == ShipState::LR_Release) {
+      if (State_ == ShipState::LR_Release)
+      {
         State_ = ShipState::L;
         return;
       }
-      if (State_ == ShipState::L) {
+      if (State_ == ShipState::L)
+      {
         return;
       }
-      if (State_ == ShipState::R) {
+      if (State_ == ShipState::R)
+      {
         State_ = ShipState::BOTH_LR;
         return;
       }
@@ -53,20 +59,24 @@ void Ship::notify(const sf::Event &e)
   {
     if (e.key.code == sf::Keyboard::Right)
     {
-      if (State_ == ShipState::BOTH_LR) {
+      if (State_ == ShipState::BOTH_LR)
+      {
         State_ = ShipState::L;
       }
-      if (State_ == ShipState::R) {
+      if (State_ == ShipState::R)
+      {
         State_ = ShipState::LR_Release;
         return;
       }
     }
     if (e.key.code == sf::Keyboard::Left)
     {
-      if (State_ == ShipState::BOTH_LR) {
+      if (State_ == ShipState::BOTH_LR)
+      {
         State_ = ShipState::R;
       }
-      if (State_ == ShipState::L) {
+      if (State_ == ShipState::L)
+      {
         State_ = ShipState::LR_Release;
         return;
       }
@@ -74,22 +84,24 @@ void Ship::notify(const sf::Event &e)
   }
 }
 
-void Ship::update() {
-  if (State_ == ShipState::BOTH_LR || State_ == ShipState::LR_Release) {
+void Ship::update()
+{
+  if (State_ == ShipState::BOTH_LR || State_ == ShipState::LR_Release)
+  {
     return;
   }
-  if (State_ == ShipState::R) {
+  if (State_ == ShipState::R)
+  {
     auto MoveMent = std::min<float>(
         settings::WindowWidth - Sprite_.getBottomRight().x,
-        settings::ShipMoveSpeed
-    );
+        settings::ShipMoveSpeed);
     Sprite_.moveRight(MoveMent);
   }
-  if (State_ == ShipState::L) {
+  if (State_ == ShipState::L)
+  {
     auto MoveMent = std::min<float>(
         Sprite_.getBottomLeft().x,
-        settings::ShipMoveSpeed
-    );
+        settings::ShipMoveSpeed);
     Sprite_.moveLeft(MoveMent);
   }
 }
