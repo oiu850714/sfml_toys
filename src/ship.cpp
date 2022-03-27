@@ -1,6 +1,9 @@
 #pragma once
 
+#include <algorithm>
+
 #include "ship.hpp"
+#include "settings.hpp"
 
 Ship::Ship(sf::RenderWindow *Window) : Window_(Window)
 {
@@ -72,15 +75,22 @@ void Ship::notify(const sf::Event &e)
 }
 
 void Ship::update() {
-  // TODO: Check range out of bound.
   if (State_ == ShipState::BOTH_LR || State_ == ShipState::LR_Release) {
     return;
   }
   if (State_ == ShipState::R) {
-    Sprite_.moveRight(settings::ShipMoveSpeed);
+    auto MoveMent = std::min<float>(
+        settings::WindowWidth - Sprite_.getBottomRight().x,
+        settings::ShipMoveSpeed
+    );
+    Sprite_.moveRight(MoveMent);
   }
   if (State_ == ShipState::L) {
-    Sprite_.moveLeft(settings::ShipMoveSpeed);
+    auto MoveMent = std::min<float>(
+        Sprite_.getBottomLeft().x,
+        settings::ShipMoveSpeed
+    );
+    Sprite_.moveLeft(MoveMent);
   }
 }
 
