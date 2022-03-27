@@ -17,4 +17,7 @@ namespace settings
   const sf::Vector2f BulletSize{6, 30};
   const int BulletSpeed = 30;
   const int MaximumBullet = 5;
+
+  const int AlienMoveSpeed = 3;
+  const int AlienDrawSpeed = 20;
 }

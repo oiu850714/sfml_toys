@@ -5,6 +5,7 @@
 
 #include "ship.hpp"
 #include "bullets.hpp"
+#include "aliens.hpp"
 
 class SpaceInvaders
 {
@@ -26,4 +27,5 @@ private:
   sf::RenderWindow Window_;
   Ship Ship_;
   Bullets Bullets_;
+  Aliens Aliens_;
 };

@@ -4,7 +4,7 @@
 
 SpaceInvaders::SpaceInvaders()
     : Window_(sf::VideoMode(1920, 1080), "Space Invaders"), Ship_(&Window_),
-      Bullets_(&Window_, Ship_)
+      Bullets_(&Window_, Ship_), Aliens_(&Window_)
 {
 }
 
@@ -63,6 +63,7 @@ void SpaceInvaders::update()
 
   Ship_.update();
   Bullets_.update();
+  Aliens_.update();
 }
 
 void SpaceInvaders::render()
@@ -70,5 +71,6 @@ void SpaceInvaders::render()
   Window_.clear(settings::BackgroundColor);
   Ship_.draw();
   Bullets_.draw();
+  Aliens_.draw();
   Window_.display();
 }
