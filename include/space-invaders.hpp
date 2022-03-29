@@ -20,6 +20,8 @@ public:
 private:
   void notify_(const sf::Event &);
   void quitGame_();
+  void checkCollisions_();
+  void resetGame_();
 
   bool Done_ = false;
   sf::Clock Clock_;

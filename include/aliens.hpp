@@ -7,6 +7,7 @@
 
 #include "bullets.hpp"
 #include "pygame-sprite-facade.hpp"
+#include "ship.hpp"
 
 class Alien {
 public:
@@ -16,6 +17,7 @@ public:
   void update();
   void draw();
 
+  sf::Vector2f getPosition() const { return Sprite_.getCenter(); }
   bool isReachingBoundary() const;
   // Make Alien drop downward the window.
   void drop();
@@ -31,14 +33,17 @@ public:
   static int getAlienMoveDirection() { return AlienMoveDirection_; }
 
   Aliens(sf::RenderWindow *);
-  void update(const std::vector<Bullet> &);
+  void update();
   void draw();
 
+  void removeShootedAliens(const std::vector<Bullet> &);
+  bool killedSpaceShip(const Ship &Ship) const;
+
+  void createNewAliens();
+
 private:
-  void createNewAliens_();
   bool isAliensReachingBoundary_() const;
   void dropAliens_();
-  void removeShootedAliens_(const std::vector<Bullet> &);
   sf::RenderWindow *Window_;
 
   std::vector<Alien> RemainAliens_;

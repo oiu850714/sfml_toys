@@ -2,6 +2,9 @@
 #include "settings.hpp"
 #include <iostream>
 
+#include <SFML/System/Sleep.hpp>
+#include <SFML/System/Time.hpp>
+
 SpaceInvaders::SpaceInvaders()
     : Window_(sf::VideoMode(1920, 1080), "Space Invaders"), Ship_(&Window_),
       Bullets_(&Window_, Ship_), Aliens_(&Window_) {}
@@ -48,7 +51,24 @@ void SpaceInvaders::update() {
 
   Ship_.update();
   Bullets_.update();
-  Aliens_.update(Bullets_.getBulletData());
+  Aliens_.update();
+
+  checkCollisions_();
+}
+
+void SpaceInvaders::checkCollisions_() {
+  Aliens_.removeShootedAliens(Bullets_.getBulletData());
+  if (Aliens_.killedSpaceShip(Ship_)) {
+    resetGame_();
+  }
+}
+
+void SpaceInvaders::resetGame_() {
+  std::cout << "You have been killed!\n";
+  sf::sleep(sf::seconds(2));
+  Ship_.reborn();
+  Bullets_.clear();
+  Aliens_.createNewAliens();
 }
 
 void SpaceInvaders::render() {

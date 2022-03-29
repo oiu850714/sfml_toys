@@ -16,6 +16,9 @@ public:
   void update();
   void draw();
 
+  bool isCollided(const sf::Vector2f &) const;
+  void reborn();
+
   sf::Vector2f getShipMozzlePos() const;
 
 private:

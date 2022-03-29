@@ -2,6 +2,7 @@
 
 #include <algorithm>
 
+#include "detail.hpp"
 #include "settings.hpp"
 #include "ship.hpp"
 
@@ -66,6 +67,10 @@ void Ship::notify(const sf::Event &e) {
   }
 }
 
+bool Ship::isCollided(const sf::Vector2f &Pos) const {
+  return isInSprite(Pos, Sprite_);
+}
+
 void Ship::update() {
   if (State_ == ShipState::BOTH_LR || State_ == ShipState::LR_Release) {
     return;
@@ -86,3 +91,5 @@ void Ship::update() {
 void Ship::draw() { Window_->draw(Sprite_.getSFSprite()); }
 
 sf::Vector2f Ship::getShipMozzlePos() const { return Sprite_.getTopMid(); }
+
+void Ship::reborn() { Sprite_.setBottomMidTo(settings::WindowMidBottom); }

@@ -47,3 +47,5 @@ void Bullets::draw() {
     bullet.draw();
   }
 }
+
+void Bullets::clear() { BulletsInSpace_.clear(); }

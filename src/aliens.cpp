@@ -1,4 +1,5 @@
 #include "aliens.hpp"
+#include "detail.hpp"
 #include "settings.hpp"
 
 #include <algorithm>
@@ -41,10 +42,7 @@ bool Alien::isReachingBoundary() const {
 void Alien::drop() { Sprite_.moveY(settings::AlienDrawSpeed); }
 
 bool Alien::isShooted(const sf::Vector2f &ShootPos) const {
-  return Sprite_.getMidLeft().x <= ShootPos.x &&
-         Sprite_.getMidRight().x >= ShootPos.x &&
-         Sprite_.getTopMid().y <= ShootPos.y &&
-         Sprite_.getBottomMid().y >= ShootPos.y;
+  return isInSprite(ShootPos, Sprite_);
 }
 
 int Aliens::AlienMoveDirection_ = 1;
@@ -52,10 +50,10 @@ int Aliens::AlienMoveDirection_ = 1;
 Aliens::Aliens(sf::RenderWindow *Window) : Window_(Window) {
   AlienImage_.loadFromFile(settings::AlienImagePath);
   AlienTexture_.loadFromImage(AlienImage_);
-  createNewAliens_();
+  createNewAliens();
 }
 
-void Aliens::createNewAliens_() {
+void Aliens::createNewAliens() {
   RemainAliens_.clear();
 
   sf::Vector2f AlienSize;
@@ -70,14 +68,10 @@ void Aliens::createNewAliens_() {
   }
 }
 
-void Aliens::update(const std::vector<Bullet> &BulletData) {
-  removeShootedAliens_(BulletData);
+void Aliens::update() {
   if (isAliensReachingBoundary_()) {
     AlienMoveDirection_ *= -1;
     dropAliens_();
-  }
-  if (RemainAliens_.empty()) {
-    createNewAliens_();
   }
   for (auto &Alien : RemainAliens_) {
     Alien.update();
@@ -95,7 +89,7 @@ void Aliens::dropAliens_() {
   }
 }
 
-void Aliens::removeShootedAliens_(const std::vector<Bullet> &BulletData) {
+void Aliens::removeShootedAliens(const std::vector<Bullet> &BulletData) {
   RemainAliens_.erase(
       std::remove_if(RemainAliens_.begin(), RemainAliens_.end(),
                      [&BulletData](auto &Alien) {
@@ -107,6 +101,17 @@ void Aliens::removeShootedAliens_(const std::vector<Bullet> &BulletData) {
                        return false;
                      }),
       RemainAliens_.end());
+
+  if (RemainAliens_.empty()) {
+    createNewAliens();
+  }
+}
+
+bool Aliens::killedSpaceShip(const Ship &Ship) const {
+  return std::any_of(RemainAliens_.begin(), RemainAliens_.end(),
+                     [&Ship](const auto &Alien) {
+                       return Ship.isCollided(Alien.getPosition());
+                     });
 }
 
 void Aliens::draw() {
