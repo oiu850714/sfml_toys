@@ -52,6 +52,12 @@ int Aliens::AlienMoveDirection_ = 1;
 Aliens::Aliens(sf::RenderWindow *Window) : Window_(Window) {
   AlienImage_.loadFromFile(settings::AlienImagePath);
   AlienTexture_.loadFromImage(AlienImage_);
+  createNewAliens_();
+}
+
+void Aliens::createNewAliens_() {
+  RemainAliens_.clear();
+
   sf::Vector2f AlienSize;
   {
     auto TextureSize = AlienTexture_.getSize();
@@ -69,6 +75,9 @@ void Aliens::update(const std::vector<Bullet> &BulletData) {
   if (isAliensReachingBoundary_()) {
     AlienMoveDirection_ *= -1;
     dropAliens_();
+  }
+  if (RemainAliens_.empty()) {
+    createNewAliens_();
   }
   for (auto &Alien : RemainAliens_) {
     Alien.update();

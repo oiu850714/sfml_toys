@@ -35,6 +35,7 @@ public:
   void draw();
 
 private:
+  void createNewAliens_();
   bool isAliensReachingBoundary_() const;
   void dropAliens_();
   void removeShootedAliens_(const std::vector<Bullet> &);
