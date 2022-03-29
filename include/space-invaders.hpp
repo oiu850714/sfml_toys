@@ -1,14 +1,13 @@
 #pragma once
 
-#include <SFML/System/Clock.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/System/Clock.hpp>
 
-#include "ship.hpp"
-#include "bullets.hpp"
 #include "aliens.hpp"
+#include "bullets.hpp"
+#include "ship.hpp"
 
-class SpaceInvaders
-{
+class SpaceInvaders {
 public:
   SpaceInvaders();
   ~SpaceInvaders();

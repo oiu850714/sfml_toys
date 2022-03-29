@@ -2,15 +2,14 @@
 
 #include <vector>
 
-#include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/Sprite.hpp>
 
+#include "pygame-sprite-facade.hpp"
 #include "settings.hpp"
 #include "ship.hpp"
-#include "pygame-sprite-facade.hpp"
 
-class Bullet
-{
+class Bullet {
 public:
   Bullet(sf::RenderWindow *, const sf::Vector2f &StartPos);
 
@@ -24,8 +23,7 @@ private:
   sf::RectangleShape BulletShape_;
 };
 
-class Bullets
-{
+class Bullets {
 public:
   Bullets(sf::RenderWindow *Window, const Ship &Ship)
       : Window_(Window), Ship_(Ship) {}
@@ -34,10 +32,7 @@ public:
   void update();
   void draw();
 
-  const std::vector<Bullet> &getBulletData() const
-  {
-    return BulletsInSpace_;
-  }
+  const std::vector<Bullet> &getBulletData() const { return BulletsInSpace_; }
 
 private:
   void removeOutOfBoundBullets_();

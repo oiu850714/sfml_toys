@@ -3,17 +3,11 @@
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/System/Vector2.hpp>
 
-#include <iostream>
-
 // Make position setting more readable.
-class PygameSpriteFacade
-{
+class PygameSpriteFacade {
 public:
   PygameSpriteFacade() = default;
-  void setSFSprite(sf::Sprite SFSprite)
-  {
-    SFSprite_ = std::move(SFSprite);
-  }
+  void setSFSprite(sf::Sprite SFSprite) { SFSprite_ = std::move(SFSprite); }
   const sf::Sprite &getSFSprite() const { return SFSprite_; }
   void setRightTo(float x);
   void setLeftTo(float x);
@@ -39,33 +33,18 @@ public:
   sf::Vector2f getBottomRight() const;
   sf::Vector2f getBottomLeft() const;
 
-  void moveRight(sf::Int32 x)
-  {
-    moveX(x);
-  }
+  void moveRight(sf::Int32 x) { moveX(x); }
 
-  void moveLeft(sf::Int32 x)
-  {
-    moveX(-x);
-  }
+  void moveLeft(sf::Int32 x) { moveX(-x); }
 
-  void moveUp(sf::Int32 y)
-  {
-    moveY(-y);
-  }
+  void moveUp(sf::Int32 y) { moveY(-y); }
 
-  void moveDown(sf::Int32 y)
-  {
-    moveY(y);
-  }
+  void moveDown(sf::Int32 y) { moveY(y); }
 
   void moveX(sf::Int32 x);
   void moveY(sf::Int32 y);
 
-  void setScale(float scale)
-  {
-    SFSprite_.setScale(scale, scale);
-  }
+  void setScale(float scale) { SFSprite_.setScale(scale, scale); }
 
 private:
   sf::Sprite SFSprite_;

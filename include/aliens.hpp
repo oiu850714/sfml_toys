@@ -5,14 +5,14 @@
 #include <SFML/Graphics/Texture.hpp>
 #include <SFML/Window/Event.hpp>
 
-#include "pygame-sprite-facade.hpp"
 #include "bullets.hpp"
+#include "pygame-sprite-facade.hpp"
 
-class Alien
-{
+class Alien {
 public:
   static auto getScaledFactor() { return 2; }
-  Alien(sf::RenderWindow *, const sf::Texture &AlienTexture, const sf::Vector2f &StartPos);
+  Alien(sf::RenderWindow *, const sf::Texture &AlienTexture,
+        const sf::Vector2f &StartPos);
   void update();
   void draw();
 
@@ -26,8 +26,7 @@ private:
   PygameSpriteFacade Sprite_;
 };
 
-class Aliens
-{
+class Aliens {
 public:
   static int getAlienMoveDirection() { return AlienMoveDirection_; }
 

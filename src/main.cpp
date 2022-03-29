@@ -10,11 +10,9 @@
 
 using namespace std;
 
-int main()
-{
+int main() {
   SpaceInvaders Game;
-  while (!Game.isDone())
-  {
+  while (!Game.isDone()) {
     Game.handleInput();
     Game.update();
     Game.render();

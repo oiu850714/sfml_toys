@@ -1,15 +1,14 @@
 #pragma once
 
-#include <iostream>
 #include <cassert>
+#include <iostream>
 
 #include <SFML/Graphics.hpp>
 
-#include "settings.hpp"
 #include "pygame-sprite-facade.hpp"
+#include "settings.hpp"
 
-class Ship
-{
+class Ship {
 public:
   Ship(sf::RenderWindow *);
 
@@ -25,8 +24,7 @@ private:
   sf::Texture Texture_;
   PygameSpriteFacade Sprite_;
 
-  enum class ShipState
-  {
+  enum class ShipState {
     LR_Release,
     L,
     R,
