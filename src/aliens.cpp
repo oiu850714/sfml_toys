@@ -46,15 +46,19 @@ bool Alien::isReachingBoundary() const
   return Sprite_.getMidRight().x >= settings::WindowSize.x || Sprite_.getMidLeft().x <= 0;
 }
 
-void Alien::drop()
+void Alien::drop() { Sprite_.moveY(settings::AlienDrawSpeed); }
+
+bool Alien::isShooted(const sf::Vector2f &ShootPos) const
 {
-  Sprite_.moveY(settings::AlienDrawSpeed);
+  return Sprite_.getMidLeft().x <= ShootPos.x &&
+         Sprite_.getMidRight().x >= ShootPos.x &&
+         Sprite_.getTopMid().y <= ShootPos.y &&
+         Sprite_.getBottomMid().y >= ShootPos.y;
 }
 
 int Aliens::AlienMoveDirection_ = 1;
 
-Aliens::Aliens(sf::RenderWindow *Window)
-    : Window_(Window)
+Aliens::Aliens(sf::RenderWindow *Window) : Window_(Window)
 {
   AlienImage_.loadFromFile(settings::AlienImagePath);
   AlienTexture_.loadFromImage(AlienImage_);
@@ -71,8 +75,9 @@ Aliens::Aliens(sf::RenderWindow *Window)
   }
 }
 
-void Aliens::update()
+void Aliens::update(const std::vector<Bullet> &BulletData)
 {
+  removeShootedAliens_(BulletData);
   if (isAliensReachingBoundary_())
   {
     AlienMoveDirection_ *= -1;
@@ -95,6 +100,24 @@ void Aliens::dropAliens_()
   {
     Alien.drop();
   }
+}
+
+void Aliens::removeShootedAliens_(const std::vector<Bullet> &BulletData)
+{
+  RemainAliens_.erase(
+      std::remove_if(RemainAliens_.begin(), RemainAliens_.end(),
+                     [&BulletData](auto &Alien)
+                     {
+                       for (const auto &Bullet : BulletData)
+                       {
+                         if (Alien.isShooted(Bullet.getPosition()))
+                         {
+                           return true;
+                         }
+                       }
+                       return false;
+                     }),
+      RemainAliens_.end());
 }
 
 void Aliens::draw()

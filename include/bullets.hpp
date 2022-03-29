@@ -34,6 +34,11 @@ public:
   void update();
   void draw();
 
+  const std::vector<Bullet> &getBulletData() const
+  {
+    return BulletsInSpace_;
+  }
+
 private:
   void removeOutOfBoundBullets_();
   std::vector<Bullet> BulletsInSpace_;

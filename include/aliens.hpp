@@ -6,6 +6,7 @@
 #include <SFML/Window/Event.hpp>
 
 #include "pygame-sprite-facade.hpp"
+#include "bullets.hpp"
 
 class Alien
 {
@@ -18,6 +19,7 @@ public:
   bool isReachingBoundary() const;
   // Make Alien drop downward the window.
   void drop();
+  bool isShooted(const sf::Vector2f &ShootPos) const;
 
 private:
   sf::RenderWindow *Window_;
@@ -30,12 +32,13 @@ public:
   static int getAlienMoveDirection() { return AlienMoveDirection_; }
 
   Aliens(sf::RenderWindow *);
-  void update();
+  void update(const std::vector<Bullet> &);
   void draw();
 
 private:
   bool isAliensReachingBoundary_() const;
   void dropAliens_();
+  void removeShootedAliens_(const std::vector<Bullet> &);
   sf::RenderWindow *Window_;
 
   std::vector<Alien> RemainAliens_;

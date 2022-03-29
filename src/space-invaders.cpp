@@ -63,7 +63,7 @@ void SpaceInvaders::update()
 
   Ship_.update();
   Bullets_.update();
-  Aliens_.update();
+  Aliens_.update(Bullets_.getBulletData());
 }
 
 void SpaceInvaders::render()
