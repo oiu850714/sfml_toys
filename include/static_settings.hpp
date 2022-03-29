@@ -2,7 +2,7 @@
 
 #include <SFML/Graphics.hpp>
 
-namespace settings {
+namespace static_settings {
 const sf::Color BackgroundColor{230, 230, 230};
 const unsigned WindowWidth = 1920;
 const unsigned WindowHeight = 1080;
@@ -19,4 +19,5 @@ const int MaximumBullet = 5;
 
 const int AlienMoveSpeed = 3;
 const int AlienDropSpeed = 20;
-} // namespace settings
+const int ScorePerAlien = 100;
+} // namespace static_settings

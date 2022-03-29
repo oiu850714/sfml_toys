@@ -4,7 +4,6 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
-#include "settings.hpp"
 #include "ship.hpp"
 #include "space-invaders.hpp"
 

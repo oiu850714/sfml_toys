@@ -7,6 +7,7 @@ add_library(space_invaders STATIC
   "pygame-sprite-facade.cpp"
   "aliens.cpp"
   "detail.cpp"
+  "game_states.cpp"
 )
 target_include_directories(space_invaders PRIVATE "${CMAKE_SOURCE_DIR}/include")
 target_link_libraries(space_invaders sfml-graphics)

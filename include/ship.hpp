@@ -5,12 +5,13 @@
 
 #include <SFML/Graphics.hpp>
 
+#include "game_states.hpp"
 #include "pygame-sprite-facade.hpp"
-#include "settings.hpp"
+#include "static_settings.hpp"
 
 class Ship {
 public:
-  Ship(sf::RenderWindow *);
+  Ship(sf::RenderWindow *, const GameStates &);
 
   void notify(const sf::Event &);
   void update();
@@ -23,6 +24,7 @@ public:
 
 private:
   sf::RenderWindow *Window_;
+  const GameStates &GameStates_;
   sf::Image Image_;
   sf::Texture Texture_;
   PygameSpriteFacade Sprite_;

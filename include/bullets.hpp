@@ -6,14 +6,14 @@
 #include <SFML/Graphics/Sprite.hpp>
 
 #include "pygame-sprite-facade.hpp"
-#include "settings.hpp"
 #include "ship.hpp"
+#include "static_settings.hpp"
 
 class Bullet {
 public:
   Bullet(sf::RenderWindow *, const sf::Vector2f &StartPos);
 
-  void update();
+  void update(float BulletSpeed);
   void draw();
 
   sf::Vector2f getPosition() const;
@@ -25,8 +25,9 @@ private:
 
 class Bullets {
 public:
-  Bullets(sf::RenderWindow *Window, const Ship &Ship)
-      : Window_(Window), Ship_(Ship) {}
+  Bullets(sf::RenderWindow *Window, const Ship &Ship,
+          const GameStates &GameStates)
+      : Window_(Window), Ship_(Ship), GameStates_(GameStates) {}
 
   void notify(const sf::Event &);
   void update();
@@ -40,5 +41,6 @@ private:
   void removeOutOfBoundBullets_();
   std::vector<Bullet> BulletsInSpace_;
   sf::RenderWindow *Window_;
+  const GameStates &GameStates_;
   const Ship &Ship_;
 };

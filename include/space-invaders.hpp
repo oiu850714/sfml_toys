@@ -5,6 +5,7 @@
 
 #include "aliens.hpp"
 #include "bullets.hpp"
+#include "game_states.hpp"
 #include "ship.hpp"
 
 class SpaceInvaders {
@@ -21,11 +22,12 @@ private:
   void notify_(const sf::Event &);
   void quitGame_();
   void checkCollisions_();
-  void resetGame_();
+  void resetBattleField_();
 
   bool Done_ = false;
   sf::Clock Clock_;
   sf::RenderWindow Window_;
+  GameStates GameStates_;
   Ship Ship_;
   Bullets Bullets_;
   Aliens Aliens_;

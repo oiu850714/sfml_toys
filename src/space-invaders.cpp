@@ -1,13 +1,14 @@
 #include "space-invaders.hpp"
-#include "settings.hpp"
+#include "static_settings.hpp"
 #include <iostream>
 
 #include <SFML/System/Sleep.hpp>
 #include <SFML/System/Time.hpp>
 
 SpaceInvaders::SpaceInvaders()
-    : Window_(sf::VideoMode(1920, 1080), "Space Invaders"), Ship_(&Window_),
-      Bullets_(&Window_, Ship_), Aliens_(&Window_) {}
+    : Window_(sf::VideoMode(1920, 1080), "Space Invaders"),
+      GameStates_(&Window_), Ship_(&Window_, GameStates_),
+      Bullets_(&Window_, Ship_, GameStates_), Aliens_(&Window_, GameStates_) {}
 
 SpaceInvaders::~SpaceInvaders() = default;
 
@@ -57,14 +58,27 @@ void SpaceInvaders::update() {
 }
 
 void SpaceInvaders::checkCollisions_() {
-  Aliens_.removeShootedAliens(Bullets_.getBulletData());
   if (Aliens_.killedSpaceShip(Ship_)) {
-    resetGame_();
+    resetBattleField_();
+    GameStates_.dropHp();
+    if (GameStates_.isDead()) {
+      std::cout << "You Dead!\n";
+      GameStates_.resetGameStates();
+    }
+  }
+  for (int NumKilledAliens =
+           Aliens_.removeShootedAliens(Bullets_.getBulletData());
+       NumKilledAliens-- > 0;) {
+    GameStates_.killAlien();
+  }
+  if (Aliens_.allBeenKilled()) {
+    Aliens_.createNewAliens();
+    GameStates_.upgrateLevel();
   }
 }
 
-void SpaceInvaders::resetGame_() {
-  std::cout << "You have been killed!\n";
+void SpaceInvaders::resetBattleField_() {
+  std::cout << "You broke the ship!\n";
   sf::sleep(sf::seconds(2));
   Ship_.reborn();
   Bullets_.clear();
@@ -72,7 +86,7 @@ void SpaceInvaders::resetGame_() {
 }
 
 void SpaceInvaders::render() {
-  Window_.clear(settings::BackgroundColor);
+  Window_.clear(static_settings::BackgroundColor);
   Ship_.draw();
   Bullets_.draw();
   Aliens_.draw();

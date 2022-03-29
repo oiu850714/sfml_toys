@@ -5,15 +5,14 @@
 #include <SFML/Graphics/Color.hpp>
 
 Bullet::Bullet(sf::RenderWindow *Window, const sf::Vector2f &StartPos)
-    : Window_(Window), BulletShape_(settings::BulletSize) {
+    : Window_(Window), BulletShape_(static_settings::BulletSize) {
   BulletShape_.setPosition(StartPos);
   BulletShape_.setFillColor(sf::Color::Black);
 }
 
-void Bullet::update() {
+void Bullet::update(float BulletSpeed) {
   auto CurrentPos_ = BulletShape_.getPosition();
-  BulletShape_.setPosition(
-      {CurrentPos_.x, CurrentPos_.y - settings::BulletSpeed});
+  BulletShape_.setPosition({CurrentPos_.x, CurrentPos_.y - BulletSpeed});
 }
 
 void Bullet::draw() { Window_->draw(BulletShape_); }
@@ -23,14 +22,14 @@ sf::Vector2f Bullet::getPosition() const { return BulletShape_.getPosition(); }
 void Bullets::notify(const sf::Event &e) {
   assert(e.type == sf::Event::KeyPressed);
   if (e.key.code == sf::Keyboard::Space &&
-      BulletsInSpace_.size() < settings::MaximumBullet) {
+      BulletsInSpace_.size() < static_settings::MaximumBullet) {
     BulletsInSpace_.push_back(Bullet(Window_, Ship_.getShipMozzlePos()));
   }
 }
 
 void Bullets::update() {
   for (auto &bullet : BulletsInSpace_) {
-    bullet.update();
+    bullet.update(GameStates_.getBulletSpeed());
   }
   removeOutOfBoundBullets_();
 }

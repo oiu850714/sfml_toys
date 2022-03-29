@@ -1,13 +1,13 @@
 #include "aliens.hpp"
 #include "detail.hpp"
-#include "settings.hpp"
+#include "static_settings.hpp"
 
 #include <algorithm>
 #include <functional>
 #include <vector>
 
 static std::vector<sf::Vector2f> NewAliensCoordinates(sf::Vector2f AlienSize) {
-  auto WindowSize = settings::WindowSize;
+  auto WindowSize = static_settings::WindowSize;
   std::vector<sf::Vector2f> Ret;
   auto RightBoundary = WindowSize.x - AlienSize.x;
   auto LowerBoundary = WindowSize.y - 3 * AlienSize.y;
@@ -28,18 +28,18 @@ Alien::Alien(sf::RenderWindow *Window, const sf::Texture &AlienTexture,
   Sprite_.setCenterTo(StartPos);
 }
 
-void Alien::update() {
-  Sprite_.moveX(settings::AlienMoveSpeed * Aliens::getAlienMoveDirection());
+void Alien::update(float AlienSpeed) {
+  Sprite_.moveX(AlienSpeed * Aliens::getAlienMoveDirection());
 }
 
 void Alien::draw() { Window_->draw(Sprite_.getSFSprite()); }
 
 bool Alien::isReachingBoundary() const {
-  return Sprite_.getMidRight().x >= settings::WindowSize.x ||
+  return Sprite_.getMidRight().x >= static_settings::WindowSize.x ||
          Sprite_.getMidLeft().x <= 0;
 }
 
-void Alien::drop() { Sprite_.moveY(settings::AlienDropSpeed); }
+void Alien::drop() { Sprite_.moveY(static_settings::AlienDropSpeed); }
 
 bool Alien::isShooted(const sf::Vector2f &ShootPos) const {
   return isInSprite(ShootPos, Sprite_);
@@ -47,8 +47,9 @@ bool Alien::isShooted(const sf::Vector2f &ShootPos) const {
 
 int Aliens::AlienMoveDirection_ = 1;
 
-Aliens::Aliens(sf::RenderWindow *Window) : Window_(Window) {
-  AlienImage_.loadFromFile(settings::AlienImagePath);
+Aliens::Aliens(sf::RenderWindow *Window, const GameStates &GameStates)
+    : Window_(Window), GameStates_(GameStates) {
+  AlienImage_.loadFromFile(static_settings::AlienImagePath);
   AlienTexture_.loadFromImage(AlienImage_);
   createNewAliens();
 }
@@ -74,7 +75,7 @@ void Aliens::update() {
     dropAliens_();
   }
   for (auto &Alien : RemainAliens_) {
-    Alien.update();
+    Alien.update(GameStates_.getAlienMoveSpeed());
   }
 }
 
@@ -89,7 +90,8 @@ void Aliens::dropAliens_() {
   }
 }
 
-void Aliens::removeShootedAliens(const std::vector<Bullet> &BulletData) {
+int Aliens::removeShootedAliens(const std::vector<Bullet> &BulletData) {
+  auto OldNumAliens = RemainAliens_.size();
   RemainAliens_.erase(
       std::remove_if(RemainAliens_.begin(), RemainAliens_.end(),
                      [&BulletData](auto &Alien) {
@@ -101,10 +103,7 @@ void Aliens::removeShootedAliens(const std::vector<Bullet> &BulletData) {
                        return false;
                      }),
       RemainAliens_.end());
-
-  if (RemainAliens_.empty()) {
-    createNewAliens();
-  }
+  return OldNumAliens - RemainAliens_.size();
 }
 
 bool Aliens::killedSpaceShip(const Ship &Ship) const {
