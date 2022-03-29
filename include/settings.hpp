@@ -18,5 +18,5 @@ const int BulletSpeed = 30;
 const int MaximumBullet = 5;
 
 const int AlienMoveSpeed = 3;
-const int AlienDrawSpeed = 20;
+const int AlienDropSpeed = 20;
 } // namespace settings

@@ -39,7 +39,7 @@ bool Alien::isReachingBoundary() const {
          Sprite_.getMidLeft().x <= 0;
 }
 
-void Alien::drop() { Sprite_.moveY(settings::AlienDrawSpeed); }
+void Alien::drop() { Sprite_.moveY(settings::AlienDropSpeed); }
 
 bool Alien::isShooted(const sf::Vector2f &ShootPos) const {
   return isInSprite(ShootPos, Sprite_);
