@@ -15,6 +15,10 @@ public:
     SFSprite_ = std::move(SFSprite);
   }
   const sf::Sprite &getSFSprite() const { return SFSprite_; }
+  void setRightTo(float x);
+  void setLeftTo(float x);
+  void setTopTo(float y);
+  void setBottomTo(float y);
   void setTopLeftTo(const sf::Vector2f &);
   void setTopMidTo(const sf::Vector2f &);
   void setTopRightTo(const sf::Vector2f &);
@@ -37,23 +41,26 @@ public:
 
   void moveRight(sf::Int32 x)
   {
-    moveX_(x);
+    moveX(x);
   }
 
   void moveLeft(sf::Int32 x)
   {
-    moveX_(-x);
+    moveX(-x);
   }
 
   void moveUp(sf::Int32 y)
   {
-    moveY_(-y);
+    moveY(-y);
   }
 
   void moveDown(sf::Int32 y)
   {
-    moveY_(y);
+    moveY(y);
   }
+
+  void moveX(sf::Int32 x);
+  void moveY(sf::Int32 y);
 
   void setScale(float scale)
   {
@@ -62,9 +69,5 @@ public:
 
 private:
   sf::Sprite SFSprite_;
-
-  void moveX_(sf::Int32 x);
-  void moveY_(sf::Int32 y);
-
   sf::Vector2f getScaledTextureSize_() const;
 };

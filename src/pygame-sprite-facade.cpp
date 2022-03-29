@@ -1,6 +1,26 @@
 #include "settings.hpp"
 #include "pygame-sprite-facade.hpp"
 
+void PygameSpriteFacade::setRightTo(float x)
+{
+  setMidRightTo({x, getMidRight().y});
+}
+
+void PygameSpriteFacade::setLeftTo(float x)
+{
+  setMidLeftTo({x, getMidLeft().y});
+}
+
+void PygameSpriteFacade::setTopTo(float y)
+{
+  setTopMidTo({getTopMid().x, y});
+}
+
+void PygameSpriteFacade::setBottomTo(float y)
+{
+  setBottomMidTo({getBottomMid().x, y});
+}
+
 void PygameSpriteFacade::setTopLeftTo(const sf::Vector2f &Pos)
 {
   SFSprite_.setPosition({Pos.x, Pos.y});
@@ -131,13 +151,13 @@ sf::Vector2f PygameSpriteFacade::getBottomRight() const
   return {Position.x + Offset.x, Position.y + Offset.y};
 }
 
-void PygameSpriteFacade::moveX_(sf::Int32 x)
+void PygameSpriteFacade::moveX(sf::Int32 x)
 {
   auto OldPos = SFSprite_.getPosition();
   SFSprite_.setPosition({OldPos.x + x, OldPos.y});
 }
 
-void PygameSpriteFacade::moveY_(sf::Int32 y)
+void PygameSpriteFacade::moveY(sf::Int32 y)
 {
   auto OldPos = SFSprite_.getPosition();
   SFSprite_.setPosition({OldPos.x, OldPos.y + y});

@@ -33,9 +33,7 @@ Alien::Alien(sf::RenderWindow *Window, const sf::Texture &AlienTexture,
 
 void Alien::update()
 {
-  auto OldPos = Sprite_.getCenter();
-  OldPos.x += settings::AlienMoveSpeed * Aliens::getAlienMoveDirection();
-  Sprite_.setCenterTo(OldPos);
+  Sprite_.moveX(settings::AlienMoveSpeed * Aliens::getAlienMoveDirection());
 }
 
 void Alien::draw()
@@ -50,9 +48,7 @@ bool Alien::isReachingBoundary() const
 
 void Alien::drop()
 {
-  auto OldPos = Sprite_.getCenter();
-  OldPos.y += settings::AlienDrawSpeed;
-  Sprite_.setCenterTo(OldPos);
+  Sprite_.moveY(settings::AlienDrawSpeed);
 }
 
 int Aliens::AlienMoveDirection_ = 1;
