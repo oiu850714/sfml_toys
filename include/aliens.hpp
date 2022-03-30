@@ -20,6 +20,7 @@ public:
 
   sf::Vector2f getPosition() const { return Sprite_.getCenter(); }
   bool isReachingBoundary() const;
+  bool reachedTerritory() const;
   // Make Alien drop downward the window.
   void drop();
   bool isShooted(const sf::Vector2f &ShootPos) const;
@@ -40,6 +41,7 @@ public:
   int removeShootedAliens(const std::vector<Bullet> &);
   bool allBeenKilled() const noexcept { return RemainAliens_.empty(); }
   bool killedSpaceShip(const Ship &Ship) const;
+  bool reachedTerritory() const;
 
   void createNewAliens();
 

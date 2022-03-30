@@ -39,6 +39,10 @@ bool Alien::isReachingBoundary() const {
          Sprite_.getMidLeft().x <= 0;
 }
 
+bool Alien::reachedTerritory() const {
+  return Sprite_.getBottomMid().y >= static_settings::WindowSize.y;
+}
+
 void Alien::drop() { Sprite_.moveY(static_settings::AlienDropSpeed); }
 
 bool Alien::isShooted(const sf::Vector2f &ShootPos) const {
@@ -111,6 +115,11 @@ bool Aliens::killedSpaceShip(const Ship &Ship) const {
                      [&Ship](const auto &Alien) {
                        return Ship.isCollided(Alien.getPosition());
                      });
+}
+
+bool Aliens::reachedTerritory() const {
+  return std::any_of(RemainAliens_.begin(), RemainAliens_.end(),
+                     std::mem_fn(&Alien::reachedTerritory));
 }
 
 void Aliens::draw() {

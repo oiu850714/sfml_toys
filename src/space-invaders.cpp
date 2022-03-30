@@ -58,7 +58,7 @@ void SpaceInvaders::update() {
 }
 
 void SpaceInvaders::checkCollisions_() {
-  if (Aliens_.killedSpaceShip(Ship_)) {
+  if (Aliens_.killedSpaceShip(Ship_) || Aliens_.reachedTerritory()) {
     resetBattleField_();
     GameStates_.dropHp();
     if (GameStates_.isDead()) {
