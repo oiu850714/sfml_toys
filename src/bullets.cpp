@@ -4,26 +4,34 @@
 
 #include <SFML/Graphics/Color.hpp>
 
-Bullet::Bullet(sf::RenderWindow *Window, const sf::Vector2f &StartPos)
-    : Window_(Window), BulletShape_(static_settings::BulletSize) {
-  BulletShape_.setPosition(StartPos);
-  BulletShape_.setFillColor(sf::Color::Black);
+Bullet::Bullet(sf::RenderWindow *Window, const sf::Texture &BulletTexture,
+               const sf::Vector2f &StartPos)
+    : Window_(Window) {
+  Sprite_.setSFSprite(sf::Sprite(BulletTexture));
+  Sprite_.setScale(getScaledFactor());
+  Sprite_.setCenterTo(StartPos);
 }
 
-void Bullet::update(float BulletSpeed) {
-  auto CurrentPos_ = BulletShape_.getPosition();
-  BulletShape_.setPosition({CurrentPos_.x, CurrentPos_.y - BulletSpeed});
+void Bullet::update(float BulletSpeed) { Sprite_.moveUp(BulletSpeed); }
+
+void Bullet::draw() { Window_->draw(Sprite_.getSFSprite()); }
+
+sf::Vector2f Bullet::getPosition() const { return Sprite_.getTopMid(); }
+
+Bullets::Bullets(sf::RenderWindow *Window, const Ship &Ship,
+                 const GameStates &GameStates)
+    : Window_(Window), Ship_(Ship), GameStates_(GameStates) {
+
+  BulletImage_.loadFromFile(static_settings::BulletImagePath);
+  BulletTexture_.loadFromImage(BulletImage_);
 }
-
-void Bullet::draw() { Window_->draw(BulletShape_); }
-
-sf::Vector2f Bullet::getPosition() const { return BulletShape_.getPosition(); }
 
 void Bullets::notify(const sf::Event &e) {
   assert(e.type == sf::Event::KeyPressed);
   if (e.key.code == sf::Keyboard::Space &&
       BulletsInSpace_.size() < static_settings::MaximumBullet) {
-    BulletsInSpace_.push_back(Bullet(Window_, Ship_.getShipMozzlePos()));
+    BulletsInSpace_.push_back(
+        Bullet(Window_, BulletTexture_, Ship_.getShipMozzlePos()));
   }
 }
 

@@ -12,10 +12,10 @@ const sf::Vector2f WindowMidTop{WindowWidth / 2, 0};
 
 const std::string ShipImagePath = "assets/images/ship.bmp";
 const std::string AlienImagePath = "assets/images/alien.bmp";
+const std::string BulletImagePath = "assets/images/bullet.bmp";
 const std::string ArialFontPath = "assets/fonts/arial.ttf";
 
 const int ShipMoveSpeed = 10;
-const sf::Vector2f BulletSize{6, 30};
 const int BulletSpeed = 30;
 const int MaximumBullet = 5;
 

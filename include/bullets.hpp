@@ -4,6 +4,7 @@
 
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Sprite.hpp>
+#include <SFML/Graphics/Texture.hpp>
 
 #include "pygame-sprite-facade.hpp"
 #include "ship.hpp"
@@ -11,7 +12,9 @@
 
 class Bullet {
 public:
-  Bullet(sf::RenderWindow *, const sf::Vector2f &StartPos);
+  static auto getScaledFactor() { return 2; }
+  Bullet(sf::RenderWindow *, const sf::Texture &BulletTexture,
+         const sf::Vector2f &StartPos);
 
   void update(float BulletSpeed);
   void draw();
@@ -20,14 +23,13 @@ public:
 
 private:
   sf::RenderWindow *Window_;
-  sf::RectangleShape BulletShape_;
+  PygameSpriteFacade Sprite_;
 };
 
 class Bullets {
 public:
   Bullets(sf::RenderWindow *Window, const Ship &Ship,
-          const GameStates &GameStates)
-      : Window_(Window), Ship_(Ship), GameStates_(GameStates) {}
+          const GameStates &GameStates);
 
   void notify(const sf::Event &);
   void update();
@@ -43,4 +45,7 @@ private:
   sf::RenderWindow *Window_;
   const GameStates &GameStates_;
   const Ship &Ship_;
+
+  sf::Image BulletImage_;
+  sf::Texture BulletTexture_;
 };
