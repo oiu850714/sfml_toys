@@ -1,6 +1,12 @@
 #pragma once
 
+#include <SFML/Graphics/Font.hpp>
+#include <SFML/Graphics/Image.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Text.hpp>
+#include <SFML/Graphics/Texture.hpp>
+
+#include "pygame-sprite-facade.hpp"
 
 class GameStates {
 public:
@@ -19,9 +25,27 @@ public:
   bool isDead() const noexcept { return Hp_ == 0; }
 
 private:
+  void setGameStatesTextProperties_();
+  void updateScoreText_();
+  void updateBestScoreText_();
+  void updateCurrentLevelText_();
+
+  void drawHp_();
+  void drawStatistics_();
+
   sf::RenderWindow *Window_;
   int Hp_;
+  sf::Image ShipHpImage_;
+  sf::Texture ShipHpTexture_;
+  PygameSpriteFacade ShipHpSprite_;
+
+  sf::Font DigitFont_;
   int Score_;
+  int BestScore_ = 0;
+  int CurrentLevel_ = 1;
+  sf::Text ScoreText_;
+  sf::Text BestScoreText_;
+  sf::Text CurrentLevelText_;
 
   float ShipMoveSpeed_;
   float BulletSpeed_;

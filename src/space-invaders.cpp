@@ -78,7 +78,6 @@ void SpaceInvaders::checkCollisions_() {
 }
 
 void SpaceInvaders::resetBattleField_() {
-  std::cout << "You broke the ship!\n";
   sf::sleep(sf::seconds(2));
   Ship_.reborn();
   Bullets_.clear();
@@ -90,5 +89,6 @@ void SpaceInvaders::render() {
   Ship_.draw();
   Bullets_.draw();
   Aliens_.draw();
+  GameStates_.draw();
   Window_.display();
 }
