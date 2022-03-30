@@ -1,7 +1,9 @@
 #include "game_states.hpp"
 #include "static_settings.hpp"
 
+#include <cassert>
 #include <sstream>
+#include <string>
 
 GameStates::GameStates(sf::RenderWindow *Window_) : Window_(Window_) {
   DigitFont_.loadFromFile(static_settings::ArialFontPath);
@@ -25,6 +27,14 @@ void GameStates::setGameStatesTextProperties_() {
   CurrentLevelText_.setFont(DigitFont_);
   CurrentLevelText_.setFillColor(sf::Color::Black);
   CurrentLevelText_.setCharacterSize(30);
+}
+
+void GameStates::notify(const sf::Event &e) {
+  assert(e.type == sf::Event::KeyPressed);
+
+  if (e.key.code == sf::Keyboard::P) {
+    Paused_ = false;
+  }
 }
 
 void GameStates::upgrateLevel() noexcept {
@@ -51,6 +61,8 @@ void GameStates::resetGameStates() {
   updateScoreText_();
   updateBestScoreText_();
   updateCurrentLevelText_();
+
+  Paused_ = true;
 }
 
 void GameStates::dropHp() noexcept { Hp_ -= 1; }
@@ -68,6 +80,9 @@ void GameStates::killAlien() noexcept {
 void GameStates::draw() {
   drawHp_();
   drawStatistics_();
+  if (Paused_) {
+    drawPlayButton_();
+  }
 }
 
 void GameStates::updateScoreText_() {
@@ -112,4 +127,22 @@ void GameStates::drawStatistics_() {
   CurrentLevelText_.setPosition(
       {static_settings::WindowWidth - CurrentLevelWidth, ScoreHeight + 20});
   Window_->draw(CurrentLevelText_);
+}
+
+void GameStates::drawPlayButton_() {
+  static const std::string PlayBtnMsg = "Press P to play";
+  static sf::Text PlayBtnText;
+  PlayBtnText.setFont(DigitFont_);
+  PlayBtnText.setFillColor(sf::Color::Black);
+  PlayBtnText.setString(PlayBtnMsg);
+  auto Rect = PlayBtnText.getLocalBounds();
+  sf::Vector2f Position{static_settings::WindowCenter.x - Rect.width / 2,
+                        static_settings::WindowCenter.y - Rect.height / 2};
+  sf::RectangleShape ButtonBackground;
+  ButtonBackground.setFillColor(sf::Color::Green);
+  ButtonBackground.setSize({Rect.width, Rect.height * 2});
+  ButtonBackground.setPosition(Position);
+  PlayBtnText.setPosition(Position);
+  Window_->draw(ButtonBackground);
+  Window_->draw(PlayBtnText);
 }

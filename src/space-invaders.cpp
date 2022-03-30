@@ -24,6 +24,7 @@ void SpaceInvaders::handleInput() {
       this->notify_(event);
       Ship_.notify(event);
       Bullets_.notify(event);
+      GameStates_.notify(event);
     }
     if (event.type == sf::Event::KeyReleased) {
       Ship_.notify(event);
@@ -50,6 +51,9 @@ void SpaceInvaders::update() {
   }
   Clock_.restart();
 
+  if (GameStates_.isPaused()) {
+    return;
+  }
   Ship_.update();
   Bullets_.update();
   Aliens_.update();

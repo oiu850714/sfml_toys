@@ -5,12 +5,14 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/Graphics/Texture.hpp>
+#include <SFML/Window/Event.hpp>
 
 #include "pygame-sprite-facade.hpp"
 
 class GameStates {
 public:
   GameStates(sf::RenderWindow *Window);
+  void notify(const sf::Event &);
   void upgrateLevel() noexcept;
   void dropHp() noexcept;
   void killAlien() noexcept;
@@ -24,6 +26,8 @@ public:
 
   bool isDead() const noexcept { return Hp_ == 0; }
 
+  bool isPaused() const noexcept { return Paused_; }
+
 private:
   void setGameStatesTextProperties_();
   void updateScoreText_();
@@ -32,8 +36,10 @@ private:
 
   void drawHp_();
   void drawStatistics_();
+  void drawPlayButton_();
 
   sf::RenderWindow *Window_;
+  bool Paused_ = true;
   int Hp_;
   sf::Image ShipHpImage_;
   sf::Texture ShipHpTexture_;

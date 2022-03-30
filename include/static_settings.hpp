@@ -9,6 +9,7 @@ const unsigned WindowHeight = 1080;
 const sf::Vector2u WindowSize{WindowWidth, WindowHeight};
 const sf::Vector2f WindowMidBottom{WindowWidth / 2, WindowHeight};
 const sf::Vector2f WindowMidTop{WindowWidth / 2, 0};
+const sf::Vector2f WindowCenter{WindowWidth / 2, WindowHeight / 2};
 
 const std::string ShipImagePath = "assets/images/ship.bmp";
 const std::string AlienImagePath = "assets/images/alien.bmp";
