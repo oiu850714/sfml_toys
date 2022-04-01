@@ -26,6 +26,7 @@ private:
 
   bool Done_ = false;
   sf::Clock Clock_;
+  sf::Time Elapsed_;
   sf::RenderWindow Window_;
   GameStates GameStates_;
   Ship Ship_;

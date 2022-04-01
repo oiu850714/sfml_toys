@@ -46,10 +46,13 @@ void SpaceInvaders::quitGame_() {
 
 void SpaceInvaders::update() {
   // 60fps
-  if (Clock_.getElapsedTime().asMilliseconds() <= 16.6) {
+  const float frametime = 1.0f / 60.0f;
+  Elapsed_ += Clock_.restart();
+  if (Elapsed_.asSeconds() < frametime) {
     return;
   }
-  Clock_.restart();
+
+  Elapsed_ -= sf::seconds(frametime);
 
   if (GameStates_.isPaused()) {
     return;
